@@ -33,10 +33,10 @@ const initializeDatabase = async () => {
         const menuCount = await Menu.countDocuments();
         if (menuCount === 0) {
             await seedInitialMenu();
-            console.log('🌱 Initial menu data seeded');
+            console.log('initial menu data seeded');
         }
     } catch (error) {
-        console.error('❌ Failed to initialize database:', error);
+        console.error('failed to initialize database:', error);
         isDBConnected = false;
     }
 };
@@ -128,3 +128,4 @@ server.bindAsync('127.0.0.1:30043', grpc.ServerCredentials.createInsecure(), () 
     server.start();
 });
 console.log('Server running at http://127.0.0.1:30043');
+initializeDatabase();
