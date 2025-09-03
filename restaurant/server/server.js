@@ -27,7 +27,7 @@ const initializeDatabase = async () => {
     try {
         await connectDB();
         isDBConnected = true;
-        console.log('🚀 Database initialized successfully');
+        console.log('database initialized successfully');
 
         // Seed initial menu data if database is empty
         const menuCount = await Menu.countDocuments();

@@ -34,14 +34,17 @@ const connectDB = async () => {
             try {
                 await mongoose.connection.close();
                 console.log('mongodb connection closed through app termination');
+                process.exit(0);
             } catch (err) {
-                console.error('Error during mongodb connection closure:', err);
+                console.error('error during mongodb connection closure:', err);
+                process.exit(1);
             }
         });
 
         return conn;
     } catch (error) {
         console.error('mongodb connection failed:', error.message);
+        process.exit(1);
     }
 };
 
