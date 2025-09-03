@@ -89,6 +89,7 @@ server.addService(restaurantProto.RestaurantService.service, {
     },
     insert: async (call, callback) => {
         let menuItem = call.request;
+        menuItem = new Menu(menuItem);
 
         menuItem.id = uuidv4();
         await menuItem.save();
