@@ -75,8 +75,8 @@ server.addService(restaurantProto.RestaurantService.service, {
         const menus = await Menu.find();
         callback(null, { menu: menus });
     },
-    get: (call, callback) => {
-        let menuItem = menu.find((n) => n.id == call.request.id);
+    get: async (call, callback) => {
+        let menuItem = await Menu.findById(call.request.id);
 
         if (menuItem) {
             callback(null, menuItem);
@@ -87,19 +87,20 @@ server.addService(restaurantProto.RestaurantService.service, {
             });
         }
     },
-    insert: (call, callback) => {
+    insert: async (call, callback) => {
         let menuItem = call.request;
 
         menuItem.id = uuidv4();
-        menu.push(menuItem);
+        await menuItem.save();
         callback(null, menuItem);
     },
-    update: (call, callback) => {
-        let existingMenuItem = menu.find((n) => n.id == call.request.id);
+    update: async (call, callback) => {
+        let existingMenuItem = await Menu.findById(call.request.id);
 
         if (existingMenuItem) {
             existingMenuItem.name = call.request.name;
             existingMenuItem.price = call.request.price;
+            await existingMenuItem.save();
             callback(null, existingMenuItem);
         } else {
             callback({
@@ -108,11 +109,11 @@ server.addService(restaurantProto.RestaurantService.service, {
             });
         }
     },
-    remove: (call, callback) => {
-        let existingMenuItemIndex = menu.findIndex((n) => n.id == call.request.id);
+    remove: async (call, callback) => {
+        let existingMenuItem = await Menu.findById(call.request.id);
 
-        if (existingMenuItemIndex != -1) {
-            menu.splice(existingMenuItemIndex, 1);
+        if (existingMenuItem) {
+            await existingMenuItem.deleteOne();
             callback(null, {});
         } else {
             callback({
