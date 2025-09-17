@@ -32,9 +32,9 @@ def generate_message_with_size(message_id, target_size_kb):
     return base_message
 
 
-# MESSAGE_SIZE_KB = 0.1
+MESSAGE_SIZE_KB = 0.1
 # MESSAGE_SIZE_KB = 0.5
-MESSAGE_SIZE_KB = 1
+# MESSAGE_SIZE_KB = 1
 NUM_MESSAGES = 1000
 # NUM_MESSAGES = 100000
 
@@ -76,7 +76,7 @@ try:
 
     end_time = time.time()
     print(
-        f"Time taken for {NUM_MESSAGES} messages: {end_time - start_time:.2f} seconds"
+        f"Time taken for {NUM_MESSAGES} messages of {MESSAGE_SIZE_KB}KB each: {end_time - start_time:.2f} seconds"
     )
 
 finally:
