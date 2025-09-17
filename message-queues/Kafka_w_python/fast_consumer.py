@@ -42,10 +42,10 @@ def consume_in_parallel(consumer_id: str):
                 # Update last seen message time every time
                 end_time = time.time()
             msg_count += 1
-            print(
-                f"[{consumer_id}] Partition {message.partition} | "
-                f"Received: {message.value}"
-            )
+            # print(
+            #     f"[{consumer_id}] Partition {message.partition} | "
+            #     f"Received: {message.value}"
+            # )
             # Simulate work
             # time.sleep(0.5)
 
@@ -80,5 +80,6 @@ if __name__ == "__main__":
     if start_time and end_time:
         total_time = end_time - start_time
         print(f"Total processing time: {total_time:.3f} seconds")
+        print(f"Throughput: {msg_count / total_time:.3f} messages/s")
     else:
         print("No messages were consumed.")

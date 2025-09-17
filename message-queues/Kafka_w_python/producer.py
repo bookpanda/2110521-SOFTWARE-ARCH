@@ -2,6 +2,7 @@ import json
 import time
 
 from kafka import KafkaProducer
+from tqdm import tqdm
 
 # This address should now work because of the port mapping
 # and the advertised listener setting in docker-compose.
@@ -35,8 +36,8 @@ def generate_message_with_size(message_id, target_size_kb):
 MESSAGE_SIZE_KB = 0.1
 # MESSAGE_SIZE_KB = 0.5
 # MESSAGE_SIZE_KB = 1
-NUM_MESSAGES = 1000
-# NUM_MESSAGES = 100000
+# NUM_MESSAGES = 1000
+NUM_MESSAGES = 100000
 
 try:
     # 1. Create a KafkaProducer instance
@@ -51,26 +52,27 @@ try:
     print(f"Sending {NUM_MESSAGES} messages of {MESSAGE_SIZE_KB}KB each...")
 
     start_time = time.time()
-    for i in range(NUM_MESSAGES):
+    for i in tqdm(range(NUM_MESSAGES)):
         message = generate_message_with_size(i, MESSAGE_SIZE_KB)
 
         # Calculate actual message size for verification
-        actual_size = len(json.dumps(message).encode("utf-8"))
-        print(f"Sending message {i}: {actual_size} bytes ({actual_size / 1024:.2f}KB)")
+        # actual_size = len(json.dumps(message).encode("utf-8"))
+        # print(f"Sending message {i}: {actual_size} bytes ({actual_size / 1024:.2f}KB)")
 
         # Send the message to the specified topic
-        future = producer.send(topic_name, value=message)
+        # future = producer.send(topic_name, value=message)
+        producer.send(topic_name, value=message)
 
-        try:
-            # Block until the message is sent and get metadata
-            record_metadata = future.get(timeout=10)
-            print(
-                f"Message sent to topic '{record_metadata.topic}' "
-                f"partition {record_metadata.partition} "
-                f"with offset {record_metadata.offset}"
-            )
-        except Exception as e:
-            print(f"Error sending message: {e}")
+        # try:
+        # Block until the message is sent and get metadata
+        # record_metadata = future.get(timeout=10)
+        # print(
+        #     f"Message sent to topic '{record_metadata.topic}' "
+        #     f"partition {record_metadata.partition} "
+        #     f"with offset {record_metadata.offset}"
+        # )
+        # except Exception as e:
+        #     print(f"Error sending message: {e}")
 
         # time.sleep(1)
 
