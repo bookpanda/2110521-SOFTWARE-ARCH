@@ -7,23 +7,28 @@ import pika
 def generate_message_with_size(message_id, target_size_kb):
     base_message = {
         "message_id": message_id,
-        "content": f"RabbitMQ test message #{message_id}",
-        "timestamp": time.time(),
         "producer": "rabbitmq_size_test",
     }
 
     base_size = len(json.dumps(base_message).encode("utf-8"))
     target_size_bytes = int(target_size_kb * 1024)
 
-    padding_needed = max(0, target_size_bytes - base_size - 50)
+    # minimum msg size is alrady 117 bytes
+    buffer = 0
+    if target_size_kb == 0.5:
+        buffer = 27
+    elif target_size_kb == 1:
+        buffer = 39
+
+    padding_needed = max(0, target_size_bytes - base_size - buffer)
     base_message["padding"] = "x" * padding_needed
 
     return base_message
 
 
-MESSAGE_SIZE_KB = 0.1
+# MESSAGE_SIZE_KB = 0.1
 # MESSAGE_SIZE_KB = 0.5
-# MESSAGE_SIZE_KB = 1
+MESSAGE_SIZE_KB = 1
 NUM_MESSAGES = 1000
 # NUM_MESSAGES = 100000
 
