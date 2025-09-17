@@ -14,6 +14,7 @@ def generate_message_with_size(message_id, target_size_kb):
     base_message = {
         "number": message_id,
         "message": f"Message {message_id}",
+        "distribution_method": "default_round_robin",
         "timestamp": time.time(),
     }
 
