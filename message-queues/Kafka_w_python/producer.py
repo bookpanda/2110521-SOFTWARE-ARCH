@@ -8,6 +8,36 @@ from kafka import KafkaProducer
 bootstrap_servers = ["localhost:9092"]
 topic_name = "my-topic"
 
+
+def generate_message_with_size(message_id, target_size_kb):
+    base_message = {
+        "number": message_id,
+        "message": f"Message {message_id}",
+        "timestamp": time.time(),
+    }
+
+    base_size = len(json.dumps(base_message).encode("utf-8"))
+    target_size_bytes = int(target_size_kb * 1024)  # convert KB to bytes
+
+    if target_size_kb == 0.1:
+        buffer = 17
+    elif target_size_kb == 0.5:
+        buffer = 27
+    elif target_size_kb == 1:
+        buffer = 39
+
+    padding_needed = max(0, target_size_bytes - base_size - buffer)
+    base_message["padding"] = "x" * padding_needed
+
+    return base_message
+
+
+# MESSAGE_SIZE_KB = 0.1
+# MESSAGE_SIZE_KB = 0.5
+MESSAGE_SIZE_KB = 1
+NUM_MESSAGES = 1000
+# NUM_MESSAGES = 100000
+
 try:
     # 1. Create a KafkaProducer instance
     producer = KafkaProducer(
@@ -18,13 +48,15 @@ try:
     print(f"Successfully connected to Kafka broker at {bootstrap_servers}")
 
     # 2. Send messages
-    for i in range(5):
-        message = {
-            "number": i,
-            "message": f"This message comes from a Python producer for Docker! Message {i}",
-        }
+    print(f"Sending {NUM_MESSAGES} messages of {MESSAGE_SIZE_KB}KB each...")
 
-        print(f"Sending message: {message}")
+    start_time = time.time()
+    for i in range(NUM_MESSAGES):
+        message = generate_message_with_size(i, MESSAGE_SIZE_KB)
+
+        # Calculate actual message size for verification
+        actual_size = len(json.dumps(message).encode("utf-8"))
+        print(f"Sending message {i}: {actual_size} bytes ({actual_size / 1024:.2f}KB)")
 
         # Send the message to the specified topic
         future = producer.send(topic_name, value=message)
@@ -40,7 +72,12 @@ try:
         except Exception as e:
             print(f"Error sending message: {e}")
 
-        time.sleep(1)
+        # time.sleep(1)
+
+    end_time = time.time()
+    print(
+        f"Time taken for {NUM_MESSAGES} messages: {end_time - start_time:.2f} seconds"
+    )
 
 finally:
     # 3. Flush and close the producer

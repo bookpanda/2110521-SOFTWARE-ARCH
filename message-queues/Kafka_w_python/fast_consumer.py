@@ -8,7 +8,7 @@ from kafka import KafkaConsumer
 BOOTSTRAP_SERVERS = "localhost:9092"
 TOPIC_NAME = "my-topic"
 GROUP_ID = "high-speed-group"  # All consumers share this ID
-NUM_CONSUMERS = 3
+NUM_CONSUMERS = 4
 
 
 def consume_in_parallel(consumer_id: str):
@@ -37,7 +37,7 @@ def consume_in_parallel(consumer_id: str):
                 f"[{consumer_id}] Working on Partition {message.partition} | Received: {message.value}"
             )
             # Simulate some processing time
-            time.sleep(0.5)
+            # time.sleep(0.5)
 
         print(f"[{consumer_id}] Timed out. Shutting down.")
 
