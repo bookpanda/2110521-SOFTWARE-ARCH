@@ -1,26 +1,29 @@
 # producer_round_robin.py
-from kafka import KafkaProducer
 import json
 import time
 
+from kafka import KafkaProducer
+
 producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'],
-    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+    bootstrap_servers=["localhost:9092"],
+    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
 )
 
-topic_name = 'my-topic'
+topic_name = "my-topic"
 num_messages = 20
 
 print(f"Sending {num_messages} messages to topic '{topic_name}'...")
-print("The producer will automatically distribute these across all available partitions.")
+print(
+    "The producer will automatically distribute these across all available partitions."
+)
 
 for i in range(num_messages):
-    message = {'message_id': i, 'distribution_method': 'default_round_robin'}
-    
+    message = {"message_id": i, "distribution_method": "default_round_robin"}
+
     # By NOT specifying a 'key' or 'partition', kafka-python automatically
     # cycles through the partitions for us. This is the key to load balancing.
     producer.send(topic_name, value=message)
-    
+
     print(f"Sent message #{i}")
     time.sleep(0.1)
 
