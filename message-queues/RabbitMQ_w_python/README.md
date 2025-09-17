@@ -1,0 +1,5 @@
+RabbitMQ server
+```bash
+docker run --name my-rabbitmq -p 5672:5672 -d rabbitmq:4.1.4
+docker run --name my-rabbitmq-management -p 8080:15672 -d rabbitmq:4.1.4-management
+```
