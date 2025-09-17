@@ -2,6 +2,7 @@ import json
 import time
 
 import pika
+from tqdm import tqdm
 
 
 def generate_message_with_size(message_id, target_size_kb):
@@ -26,9 +27,9 @@ def generate_message_with_size(message_id, target_size_kb):
     return base_message
 
 
-# MESSAGE_SIZE_KB = 0.1
+MESSAGE_SIZE_KB = 0.1
 # MESSAGE_SIZE_KB = 0.5
-MESSAGE_SIZE_KB = 1
+# MESSAGE_SIZE_KB = 1
 # NUM_MESSAGES = 1000
 NUM_MESSAGES = 100000
 
@@ -45,7 +46,7 @@ def main():
         start_time = time.time()
         successful_sends = 0
 
-        for i in range(NUM_MESSAGES):
+        for i in tqdm(range(NUM_MESSAGES)):
             message = generate_message_with_size(i, MESSAGE_SIZE_KB)
             message_body = json.dumps(message)
 
@@ -59,7 +60,7 @@ def main():
             )
 
             successful_sends += 1
-            print(f"Message {i}: {actual_size} bytes ({actual_size / 1024:.3f}KB)")
+            # print(f"Message {i}: {actual_size} bytes ({actual_size / 1024:.3f}KB)")
 
         end_time = time.time()
         total_time = end_time - start_time
