@@ -29,8 +29,8 @@ def generate_message_with_size(message_id, target_size_kb):
 # MESSAGE_SIZE_KB = 0.1
 # MESSAGE_SIZE_KB = 0.5
 MESSAGE_SIZE_KB = 1
-NUM_MESSAGES = 1000
-# NUM_MESSAGES = 100000
+# NUM_MESSAGES = 1000
+NUM_MESSAGES = 100000
 
 
 def main():
