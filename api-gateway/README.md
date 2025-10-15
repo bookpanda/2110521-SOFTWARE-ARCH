@@ -52,7 +52,14 @@ grpcroute,/ (no strippath),grpc
 can test on postman on localhost:9080
 
 
+## Auth
+### Consumer
+consumer,cred user, cred pass
+Bob,Bob,Bob
 
+httpservice1 -> plugin Basic Auth
+httpservice1 -> plugin Key Auth, turn off `key in query`
+replicate to rest/grpc services
 ```bash
 ./http-scipt.sh
 ./grpc-scipt.sh
