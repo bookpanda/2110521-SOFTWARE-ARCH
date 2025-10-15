@@ -12,3 +12,7 @@ docker-compose up -d kong-database
 docker-compose up kong-migrations
 docker-compose up -d kong konga
 ```
+
+## Set connection
+- name: Connect1
+- url: http://kong:8001

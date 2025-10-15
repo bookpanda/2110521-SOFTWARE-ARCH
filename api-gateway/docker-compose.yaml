@@ -76,7 +76,7 @@ services:
       DB_USER: kong
       DB_PASSWORD: kong
       DB_DATABASE: konga
-      NODE_ENV: development
+      NODE_ENV: development # IMPORTANT: to populate the database
       DB_AUTO_MIGRATE: "true"
     ports:
       - "1337:1337"
