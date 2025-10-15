@@ -17,3 +17,7 @@ docker-compose up -d
 ```bash
 ./scipt.sh
 ```
+- Restaurant client: http://localhost:8000/client
+- Restaurant server: http://localhost:8000/server
+- Mongo Express: http://localhost:8000/mongo
+    - admin: admin
