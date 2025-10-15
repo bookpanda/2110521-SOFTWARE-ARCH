@@ -12,7 +12,8 @@ var packageDefinition = protoLoader.loadSync(PROTO_PATH,{
 
 var restaurantService =grpc.loadPackageDefinition(packageDefinition).RestaurantService;
 
-const SERVICE_API_URL = process.env.SERVICE_API_URL || "localhost:30043";
+// Use Kong gRPC gateway instead of direct connection
+const SERVICE_API_URL = process.env.SERVICE_API_URL || "kong:8000";
 const client = new restaurantService(SERVICE_API_URL, grpc.credentials.createInsecure());
 
 module.exports = client;

@@ -149,7 +149,7 @@ services:
       - kong-net
     environment:
       PORT: 3000
-      SERVICE_API_URL: restaurants-server:30043
+      SERVICE_API_URL: kong:8000
     ports:
       - "3000:3000"
     volumes:
