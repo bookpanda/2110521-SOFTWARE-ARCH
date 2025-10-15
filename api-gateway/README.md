@@ -13,12 +13,22 @@ docker-compose up -d
 - name: Connect1
 - url: http://kong:8001
 
+## Init services
+```bash
+node ./SimpleHTTP/main1.js
+node ./SimpleHTTP/main2.js
+node ./SimpleREST/app.js
+
+cd ./SimplegRPC/node
+node ./greeter_server.js
+
+# cd ./SimplegRPC/node
+# node ./greeter_client.js
+
+```
+
 ## Set services/routes
 ```bash
 ./http-scipt.sh
 ./grpc-scipt.sh
 ```
-- Restaurant client: http://localhost:8000/client
-- Restaurant server: http://localhost:8000/RestaurantService
-- Mongo Express: http://localhost:8000/mongo
-    - admin: admin
