@@ -47,6 +47,12 @@ restroute,/rest
 http://localhost:8000/rest
 http://localhost:8000/rest/account?username=nraboy
 
+grpcservice,grpc,192.168.105.1,50051
+grpcroute,/ (no strippath),grpc
+can test on postman on localhost:9080
+
+
+
 ```bash
 ./http-scipt.sh
 ./grpc-scipt.sh
