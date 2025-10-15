@@ -31,6 +31,22 @@ node ./greeter_server.js
 ## Set services/routes
 httpservices1,http,192.168.105.1,8081
 httpservice1route,/myservice1
+http://localhost:8000/myservice1
+
+httpservicegroup,80,http,upstream
+httpservicegrouproute,/servicegroup
+### Upstream
+upstream
+targets:
+- 192.168.105.1:8081
+- 192.168.105.1:8082
+http://localhost:8000/servicegroup
+
+restservice,http,192.168.105.1,3000
+restroute,/rest
+http://localhost:8000/rest
+http://localhost:8000/rest/account?username=nraboy
+
 ```bash
 ./http-scipt.sh
 ./grpc-scipt.sh
