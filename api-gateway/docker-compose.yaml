@@ -12,6 +12,8 @@ services:
       POSTGRES_USER: kong
       POSTGRES_DB: kong
       POSTGRES_PASSWORD: kong
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: on-failure
 
   # Kong Migrations (runs once and exits)
@@ -70,9 +72,12 @@ services:
     environment:
       DB_ADAPTER: postgres
       DB_HOST: kong-database
-      DB_URI: postgresql://kong:kong@kong-database:5432/konga
-      KONGA_HOOK_TIMEOUT: 120000
-      NODE_ENV: production
+      DB_PORT: 5432
+      DB_USER: kong
+      DB_PASSWORD: kong
+      DB_DATABASE: konga
+      NODE_ENV: development
+      DB_AUTO_MIGRATE: "true"
     ports:
       - "1337:1337"
     restart: on-failure
