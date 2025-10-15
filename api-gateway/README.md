@@ -15,9 +15,10 @@ docker-compose up -d
 
 ## Set services/routes
 ```bash
-./scipt.sh
+./http-scipt.sh
+./grpc-scipt.sh
 ```
 - Restaurant client: http://localhost:8000/client
-- Restaurant server: http://localhost:8000/server
+- Restaurant server: http://localhost:8000/RestaurantService
 - Mongo Express: http://localhost:8000/mongo
     - admin: admin
