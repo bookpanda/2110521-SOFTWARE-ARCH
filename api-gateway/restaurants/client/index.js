@@ -35,7 +35,7 @@ app.post("/save",(req,res)=>{
         if(err) throw err;
 
         console.log("New Menu created successfully", data);
-        res.redirect("/");
+        res.redirect("/client");
     });
 });
 
@@ -52,7 +52,7 @@ app.post("/update", (req, res) => {
 		if (err) throw err;
 
 		console.log("Menu Item updated successfully", data);
-		res.redirect("/");
+		res.redirect("/client");
 	});
 });
 
@@ -62,7 +62,7 @@ app.post("/remove",(req,res)=>{
     client.remove({id: req.body.menuItem_id},(err,_)=>{
         if(err) throw err;
         console.log("Menu Item removed successfully");
-        res.redirect("/");
+        res.redirect("/client");
     });
 });
 
