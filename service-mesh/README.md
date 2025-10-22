@@ -53,3 +53,14 @@ kubectl port-forward svc/bookinfo-gateway-istio 8080:80
 # http://localhost:8080/productpage
 ```
 
+## Dashboard
+```bash
+kubectl apply -f ./addons
+kubectl rollout status deployment/kiali -n istio-system
+
+istioctl dashboard kiali
+
+# send requests to the app
+./send_req.sh
+
+```
