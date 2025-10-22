@@ -5,6 +5,8 @@ k3d cluster list
 kubectl config get-contexts
 
 istioctl version
+
+# install sidecars
 istioctl install -f ./bookinfo/demo-profile-no-gateways.yaml -y
 kubectl label namespace default istio-injection=enabled
 
@@ -17,6 +19,13 @@ kubectl apply -f ./bookinfo/platform/kube/bookinfo.yaml
 
 kubectl get services
 kubectl get pods
+
+# kubectl rollout restart deployment details-v1
+# kubectl rollout restart deployment productpage-v1
+# kubectl rollout restart deployment ratings-v1
+# kubectl rollout restart deployment reviews-v1
+# kubectl rollout restart deployment reviews-v2
+# kubectl rollout restart deployment reviews-v3
 
 kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
 # <title>Simple Bookstore App</title>
